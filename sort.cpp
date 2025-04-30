@@ -1,10 +1,15 @@
 #include <algorithm>
 #include <benchmark/benchmark.h>
-#include <execution>
 #include <iostream>
 #include <random>
 #include <vector>
+#ifdef PARALLEL
 
+#include <execution>
+namespace execution = std::execution;
+#else
+enum class execution { seq, unseq, par_unseq, par };
+#endif
 auto get_random_vec(size_t n) -> std::vector<double> {
   double lower = 0.0, upper = 1.0;
 
